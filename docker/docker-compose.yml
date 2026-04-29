@@ -1,0 +1,15 @@
+services:
+  postgres:
+    image: postgres:16-alpine
+    container_name: plantas-toni-postgres
+    environment:
+      POSTGRES_DB: plantastoni
+      POSTGRES_USER: plantastoni
+      POSTGRES_PASSWORD: plantastoni
+    ports:
+      - "5432:5432"
+    volumes:
+      - plantas_toni_pgdata:/var/lib/postgresql/data
+
+volumes:
+  plantas_toni_pgdata:
