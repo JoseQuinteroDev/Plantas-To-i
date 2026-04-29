@@ -4,7 +4,7 @@ import { catchError, map, of } from 'rxjs';
 import { Product } from '../models/product';
 import { API_BASE_URL } from './api';
 import { demoProducts } from './demo-data';
-import { normalizeProduct } from './visual-assets';
+import { normalizeProduct, orderFeaturedProducts } from './visual-assets';
 
 @Injectable({ providedIn: 'root' })
 export class ProductService {
@@ -21,8 +21,8 @@ export class ProductService {
 
   getFeaturedProducts() {
     return this.http.get<Product[]>(`${API_BASE_URL}/products/featured`).pipe(
-      map((products) => products.map(normalizeProduct).slice(0, 6)),
-      catchError(() => of(demoProducts.filter((product) => product.featured).map(normalizeProduct).slice(0, 6))),
+      map((products) => orderFeaturedProducts(products, demoProducts)),
+      catchError(() => of(orderFeaturedProducts(demoProducts, []))),
     );
   }
 }

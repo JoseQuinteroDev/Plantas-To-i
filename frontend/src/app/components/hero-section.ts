@@ -7,10 +7,13 @@ import { WhatsappService } from '../services/whatsapp.service';
   selector: 'app-hero-section',
   imports: [RouterLink],
   template: `
-    <section class="relative overflow-hidden pt-28">
+    <section class="relative overflow-hidden pt-24 sm:pt-28">
       <div class="container-soft grid min-h-[calc(100svh-5rem)] gap-10 pb-12 lg:grid-cols-[1fr_0.86fr] lg:items-center lg:pb-16">
         <div class="max-w-3xl">
           <p class="inline-flex rounded-full border border-emerald-900/10 bg-white/80 px-4 py-2 text-sm font-black text-emerald-800 shadow-sm">Tienda local en Málaga</p>
+          <div class="mt-5 overflow-hidden rounded-2xl border border-white/70 bg-white p-2 shadow-sm sm:hidden">
+            <img src="https://images.unsplash.com/photo-1490750967868-88aa4486c946?auto=format&fit=crop&w=900&q=84" alt="Flores frescas de Plantas Toñi" class="h-36 w-full rounded-2xl object-cover">
+          </div>
           <h1 class="mt-6 text-4xl font-black leading-[1.05] text-stone-950 sm:text-5xl lg:text-6xl">Plantas, flores y encargos a domicilio en Málaga</h1>
           <p class="mt-5 max-w-2xl text-lg leading-8 text-stone-700">En Plantas Toñi te ayudamos a encontrar el detalle perfecto: plantas, ramos, flores de temporada y encargos personalizados con atención cercana.</p>
           <div class="mt-8 flex flex-col gap-3 sm:flex-row">
@@ -26,7 +29,7 @@ import { WhatsappService } from '../services/whatsapp.service';
           </div>
         </div>
 
-        <div class="relative">
+        <div class="relative hidden sm:block">
           <div class="absolute -left-5 top-10 h-28 w-28 rounded-full bg-[#f0b39f]/35 blur-2xl"></div>
           <div class="absolute -right-3 bottom-8 h-36 w-36 rounded-full bg-emerald-200/45 blur-2xl"></div>
           <div class="relative overflow-hidden rounded-[2rem] border border-white/70 bg-white p-3 shadow-[0_28px_70px_rgba(57,74,51,0.18)]">

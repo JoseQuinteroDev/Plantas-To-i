@@ -26,6 +26,15 @@ export const productDisplayOverrides: Record<string, Partial<Product>> = {
   'limonero-frutal': { name: 'Frutales para exterior' },
 };
 
+export const featuredProductSlugs = [
+  'orquidea-blanca',
+  'ramo-personalizado',
+  'suculentas-variadas',
+  'planta-aromatica',
+  'centro-floral',
+  'limonero-frutal',
+];
+
 export const galleryImages = [
   {
     url: 'https://images.unsplash.com/photo-1490750967868-88aa4486c946?auto=format&fit=crop&w=1200&q=82',
@@ -68,4 +77,12 @@ export function normalizeProduct(product: Product): Product {
     imageUrl: productImageBySlug[product.slug] ?? product.imageUrl,
     category: normalizeCategory(product.category),
   };
+}
+
+export function orderFeaturedProducts(products: Product[], fallbackProducts: Product[]): Product[] {
+  const normalized = [...products, ...fallbackProducts].map(normalizeProduct);
+  const bySlug = new Map(normalized.map((product) => [product.slug, product]));
+  return featuredProductSlugs
+    .map((slug) => bySlug.get(slug))
+    .filter((product): product is Product => Boolean(product));
 }
