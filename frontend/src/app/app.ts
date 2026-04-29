@@ -9,7 +9,7 @@ import { WhatsappService } from './services/whatsapp.service';
   selector: 'app-root',
   imports: [RouterOutlet, RouterLink, RouterLinkActive, FloatingWhatsappButton],
   templateUrl: './app.html',
-  styleUrl: './app.css'
+  styleUrl: './app.css',
 })
 export class App implements OnInit {
   businessInfo = signal<BusinessInfo | null>(null);
@@ -20,7 +20,6 @@ export class App implements OnInit {
     { label: 'Catálogo', path: '/catalogo' },
     { label: 'A domicilio', path: '/servicio-a-domicilio' },
     { label: 'Encargos', path: '/encargos' },
-    { label: 'Galería', path: '/galeria' },
     { label: 'Contacto', path: '/contacto' },
   ];
 

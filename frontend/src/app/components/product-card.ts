@@ -6,24 +6,27 @@ import { WhatsappService } from '../services/whatsapp.service';
 @Component({
   selector: 'app-product-card',
   template: `
-    <article class="group flex h-full flex-col overflow-hidden rounded-lg bg-white shadow-[0_18px_50px_rgba(59,82,58,0.12)] ring-1 ring-emerald-900/5">
-      <div class="relative aspect-[4/3] overflow-hidden">
-        <img [src]="product.imageUrl" [alt]="product.name" class="h-full w-full object-cover transition duration-500 group-hover:scale-105">
+    <article class="soft-card group flex h-full flex-col overflow-hidden">
+      <div class="relative overflow-hidden p-2 pb-0">
+        <img [src]="product.imageUrl" [alt]="product.name" class="h-56 w-full rounded-2xl object-cover transition duration-500 group-hover:scale-[1.03]">
         @if (product.tag) {
-          <span class="absolute left-3 top-3 rounded-full bg-white/92 px-3 py-1 text-xs font-semibold text-emerald-800 shadow">{{ product.tag }}</span>
+          <span class="absolute left-5 top-5 rounded-full bg-white/95 px-3 py-1.5 text-sm font-black text-emerald-800 shadow-sm">{{ product.tag }}</span>
         }
       </div>
       <div class="flex flex-1 flex-col gap-4 p-5">
         <div>
-          <p class="text-xs font-semibold uppercase tracking-wide text-emerald-700">{{ product.category.name }}</p>
-          <h3 class="mt-1 text-xl font-semibold text-stone-900">{{ product.name }}</h3>
-          <p class="mt-2 text-sm leading-6 text-stone-600">{{ product.shortDescription }}</p>
+          <p class="text-sm font-black uppercase tracking-wide text-emerald-700">{{ product.category.name }}</p>
+          <h3 class="mt-1 text-2xl font-black leading-tight text-stone-950">{{ product.name }}</h3>
+          <p class="mt-3 text-base leading-7 text-stone-600">{{ product.shortDescription }}</p>
         </div>
-        <div class="mt-auto flex items-center justify-between gap-3">
-          <span class="text-base font-bold text-stone-900">{{ product.priceLabel || 'Consultar' }}</span>
-          <a class="rounded-full bg-emerald-700 px-4 py-2 text-sm font-semibold text-white shadow-sm transition hover:bg-emerald-800"
+        <div class="mt-auto grid gap-4">
+          <div class="flex items-center justify-between gap-3 border-t border-stone-200 pt-4">
+            <span class="text-sm font-bold text-stone-500">Precio orientativo</span>
+            <span class="text-lg font-black text-stone-950">{{ product.priceLabel || 'Consultar' }}</span>
+          </div>
+          <a class="btn-primary w-full text-sm"
              [href]="whatsapp.buildUrl(businessInfo, whatsapp.productMessage(product.name))" target="_blank" rel="noopener">
-            Consultar
+            Consultar por WhatsApp
           </a>
         </div>
       </div>

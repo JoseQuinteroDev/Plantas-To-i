@@ -1,5 +1,5 @@
 import { Component, OnInit, signal } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { EmptyState } from '../components/empty-state';
 import { ProductCard } from '../components/product-card';
 import { BusinessInfo } from '../models/business-info';
@@ -15,19 +15,33 @@ import { ProductService } from '../services/product.service';
   template: `
     <main class="section-pad pt-28">
       <div class="container-soft">
-        <div class="mb-8 max-w-3xl">
-          <p class="text-sm font-semibold uppercase tracking-wide text-emerald-700">Catálogo</p>
-          <h1 class="mt-2 text-4xl font-bold text-stone-950">Plantas, flores y encargos</h1>
-          <p class="mt-4 leading-7 text-stone-600">Productos de ejemplo para demo. Precios, stock y zonas deben confirmarse con Plantas Toñi antes de publicarse.</p>
+        <div class="mb-10 max-w-3xl">
+          <p class="text-sm font-black uppercase tracking-wide text-emerald-700">Catálogo</p>
+          <h1 class="mt-2 text-4xl font-black leading-tight text-stone-950 sm:text-5xl">Plantas, flores y encargos para consultar por WhatsApp</h1>
+          <p class="mt-5 text-lg leading-8 text-stone-600">Explora productos demo agrupados por categoría. Precios, stock y zonas deben confirmarse con Plantas Toñi antes de publicarse.</p>
         </div>
-        <div class="mb-8 flex gap-2 overflow-x-auto pb-2">
-          <button class="shrink-0 rounded-full px-4 py-2 text-sm font-semibold" [class.bg-emerald-800]="selectedCategory() === ''" [class.text-white]="selectedCategory() === ''" [class.bg-white]="selectedCategory() !== ''" (click)="selectCategory('')">Todo</button>
+        <div class="mb-10 flex flex-wrap gap-2 pb-2">
+          <button class="rounded-full px-5 py-3 text-base font-black shadow-sm transition"
+                  [class.bg-emerald-800]="selectedCategory() === ''"
+                  [class.text-white]="selectedCategory() === ''"
+                  [class.bg-white]="selectedCategory() !== ''"
+                  [class.text-stone-800]="selectedCategory() !== ''"
+                  (click)="selectCategory('')">
+            Todo
+          </button>
           @for (category of categories(); track category.id) {
-            <button class="shrink-0 rounded-full px-4 py-2 text-sm font-semibold shadow-sm" [class.bg-emerald-800]="selectedCategory() === category.slug" [class.text-white]="selectedCategory() === category.slug" [class.bg-white]="selectedCategory() !== category.slug" (click)="selectCategory(category.slug)">{{ category.name }}</button>
+            <button class="rounded-full px-5 py-3 text-base font-black shadow-sm transition"
+                    [class.bg-emerald-800]="selectedCategory() === category.slug"
+                    [class.text-white]="selectedCategory() === category.slug"
+                    [class.bg-white]="selectedCategory() !== category.slug"
+                    [class.text-stone-800]="selectedCategory() !== category.slug"
+                    (click)="selectCategory(category.slug)">
+              {{ category.name }}
+            </button>
           }
         </div>
         @if (products().length) {
-          <div class="grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
+          <div class="grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
             @for (product of products(); track product.id) {
               <app-product-card [product]="product" [businessInfo]="businessInfo()" />
             }
@@ -50,15 +64,23 @@ export class CatalogPage implements OnInit {
     private productService: ProductService,
     private businessService: BusinessInfoService,
     private route: ActivatedRoute,
+    private router: Router,
   ) {}
 
   ngOnInit() {
     this.categoryService.getCategories().subscribe((value) => this.categories.set(value));
     this.businessService.getBusinessInfo().subscribe((value) => this.businessInfo.set(value));
-    this.route.queryParamMap.subscribe((params) => this.selectCategory(params.get('category') || ''));
+    this.route.queryParamMap.subscribe((params) => this.loadCategory(params.get('category') || ''));
   }
 
   selectCategory(slug: string) {
+    this.router.navigate([], {
+      relativeTo: this.route,
+      queryParams: slug ? { category: slug } : {},
+    });
+  }
+
+  private loadCategory(slug: string) {
     this.selectedCategory.set(slug);
     this.productService.getProducts(slug || undefined).subscribe((value) => this.products.set(value));
   }

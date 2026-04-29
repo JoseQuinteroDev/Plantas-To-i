@@ -4,11 +4,14 @@ import { Category } from '../models/category';
 @Component({
   selector: 'app-category-card',
   template: `
-    <button type="button" (click)="selected.emit(category.slug)" class="group w-full overflow-hidden rounded-lg bg-white text-left shadow-sm ring-1 ring-emerald-900/5 transition hover:-translate-y-0.5 hover:shadow-xl">
-      <img [src]="category.imageUrl" [alt]="category.name" class="h-32 w-full object-cover transition duration-500 group-hover:scale-105">
-      <span class="block p-4">
-        <span class="block font-semibold text-stone-900">{{ category.name }}</span>
-        <span class="mt-1 line-clamp-2 block text-sm leading-5 text-stone-600">{{ category.description }}</span>
+    <button type="button" (click)="selected.emit(category.slug)" class="soft-card group flex h-full w-full flex-col overflow-hidden text-left">
+      <div class="overflow-hidden p-2 pb-0">
+        <img [src]="category.imageUrl" [alt]="category.name" class="h-48 w-full rounded-2xl object-cover transition duration-500 group-hover:scale-[1.03]">
+      </div>
+      <span class="flex flex-1 flex-col p-5">
+        <span class="text-xl font-black text-stone-950">{{ category.name }}</span>
+        <span class="mt-2 min-h-14 text-base leading-7 text-stone-600">{{ category.description }}</span>
+        <span class="mt-5 inline-flex font-black text-emerald-800">Ver productos</span>
       </span>
     </button>
   `,

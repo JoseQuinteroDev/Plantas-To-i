@@ -6,6 +6,7 @@ export class SafeResourceUrlPipe implements PipeTransform {
   constructor(private sanitizer: DomSanitizer) {}
 
   transform(url: string | null | undefined): SafeResourceUrl {
-    return this.sanitizer.bypassSecurityTrustResourceUrl(url || 'about:blank');
+    const safeUrl = url?.startsWith('https://www.google.com/maps') ? url : 'about:blank';
+    return this.sanitizer.bypassSecurityTrustResourceUrl(safeUrl);
   }
 }

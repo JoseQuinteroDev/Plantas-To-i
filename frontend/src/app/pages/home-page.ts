@@ -1,5 +1,7 @@
 import { Component, OnInit, signal } from '@angular/core';
+import { Router } from '@angular/router';
 import { CategoryCard } from '../components/category-card';
+import { ContactSection } from '../components/contact-section';
 import { DeliveryStepsSection } from '../components/delivery-steps-section';
 import { FeaturedProductsSection } from '../components/featured-products-section';
 import { GallerySection } from '../components/gallery-section';
@@ -14,26 +16,30 @@ import { ProductService } from '../services/product.service';
 
 @Component({
   selector: 'app-home-page',
-  imports: [HeroSection, CategoryCard, FeaturedProductsSection, DeliveryStepsSection, SpecialOccasionsSection, GallerySection],
+  imports: [HeroSection, CategoryCard, FeaturedProductsSection, DeliveryStepsSection, SpecialOccasionsSection, GallerySection, ContactSection],
   template: `
     <app-hero-section [businessInfo]="businessInfo()" />
-    <section class="section-pad bg-[#fbf8f0]">
+
+    <section class="section-pad bg-[#fbf7ef]">
       <div class="container-soft">
-        <div class="mb-8 max-w-2xl">
-          <p class="text-sm font-semibold uppercase tracking-wide text-emerald-700">Catálogo visual</p>
-          <h2 class="mt-2 text-3xl font-bold text-stone-950">Elige por tipo de producto</h2>
+        <div class="mb-10 max-w-2xl">
+          <p class="text-sm font-black uppercase tracking-wide text-emerald-700">Categorías principales</p>
+          <h2 class="mt-2 text-3xl font-black text-stone-950 sm:text-4xl">Encuentra rápido lo que buscas</h2>
+          <p class="mt-4 text-lg leading-8 text-stone-600">Plantas para casa, exterior, flores frescas, frutales, macetas y encargos especiales en un catálogo visual pensado para móvil.</p>
         </div>
-        <div class="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+        <div class="grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
           @for (category of categories(); track category.id) {
             <app-category-card [category]="category" (selected)="goCatalog($event)" />
           }
         </div>
       </div>
     </section>
+
     <app-featured-products-section [products]="featured()" [businessInfo]="businessInfo()" />
     <app-delivery-steps-section [businessInfo]="businessInfo()" />
     <app-special-occasions-section [businessInfo]="businessInfo()" />
     <app-gallery-section />
+    <app-contact-section [businessInfo]="businessInfo()" />
   `,
 })
 export class HomePage implements OnInit {
@@ -45,6 +51,7 @@ export class HomePage implements OnInit {
     private categoryService: CategoryService,
     private productService: ProductService,
     private businessService: BusinessInfoService,
+    private router: Router,
   ) {}
 
   ngOnInit() {
@@ -54,6 +61,6 @@ export class HomePage implements OnInit {
   }
 
   goCatalog(slug: string) {
-    window.location.href = `/catalogo?category=${slug}`;
+    this.router.navigate(['/catalogo'], { queryParams: { category: slug } });
   }
 }

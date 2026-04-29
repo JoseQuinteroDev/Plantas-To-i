@@ -50,7 +50,7 @@ npm.cmd start
 
 Web local: `http://localhost:4200`
 
-El frontend consume el backend desde `http://localhost:8080/api`. Si no está activo, usa datos mock para que la demo visual siga navegable.
+El frontend consume el backend desde `http://localhost:8081/api`. Si no está activo, usa datos mock para que la demo visual siga navegable.
 
 ## PostgreSQL Opcional
 
